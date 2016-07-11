@@ -1,12 +1,16 @@
 {
   "name": "synthdef-json-formatter",
   "description": "synthdef json formatter",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Nao Yonamine <mohayonao@gmail.com>",
   "bugs": {
     "url": "https://github.com/mohayonao/synthdef-json-formatter/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash.topairs": "^4.1.1",
+    "lodash.unzip": "^3.3.1",
+    "lodash.zip": "^4.0.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-preset-es2015": "^6.9.0",
