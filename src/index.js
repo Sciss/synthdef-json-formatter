@@ -21,7 +21,14 @@ function spc(n) {
 }
 
 function clean(str) {
-  return str.replace(/\[(\s+)\]/g, " $1 ").replace(/\s,/m, "  ").replace(/,(\s+)\]/m, " $1]");
+  return str
+    .replace(/\s,/g, "  ").replace(/,(\s+)\]/g, " $1]");
+}
+
+function clean2(str) {
+  return str
+    .replace(/\[(\s+)\]/g, " $1 ")
+    .replace(/\s,/g, "  ").replace(/,(\s+)\]/g, " $1]");
 }
 
 function alignR(values) {
@@ -95,9 +102,9 @@ function formatSpec(specs) {
   const unzipped = unzip(specs);
   const zipped = zip(
     alignR(unzipped[0].map(toS)),
-    alignR(unzipped[1].map(toS)),
-    alignR(unzipped[2].map(toS)),
-    zip(...fmt(unzipped[3]).map(alignN)).map(toAS).map(clean),
+    alignL(unzipped[1].map(toS)),
+    alignL(unzipped[2].map(toS)),
+    zip(...fmt(unzipped[3]).map(alignN)).map(toAS).map(clean2),
     alignN(unzipped[4])
   );
 
