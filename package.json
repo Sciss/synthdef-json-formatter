@@ -1,0 +1,30 @@
+{
+  "name": "synthdef-json-formatter",
+  "description": "synthdef json formatter",
+  "version": "0.0.0",
+  "author": "Nao Yonamine <mohayonao@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/mohayonao/synthdef-json-formatter/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "lib"
+  ],
+  "homepage": "https://github.com/mohayonao/synthdef-json-formatter/",
+  "keywords": [
+    "synthdef"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohayonao/synthdef-json-formatter.git"
+  },
+  "scripts": {}
+}
