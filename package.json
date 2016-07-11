@@ -7,7 +7,15 @@
     "url": "https://github.com/mohayonao/synthdef-json-formatter/issues"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0",
+    "eater": "^3.0.0-3",
+    "eslint": "^2.13.1",
+    "eslint-plugin-node": "^1.5.0",
+    "npm-run-all": "^2.2.0",
+    "nyc": "^6.6.1"
+  },
   "engines": {
     "node": ">= 4.0.0"
   },
@@ -26,5 +34,16 @@
     "type": "git",
     "url": "https://github.com/mohayonao/synthdef-json-formatter.git"
   },
-  "scripts": {}
+  "scripts": {
+    "build": "npm-run-all build:*",
+    "build:to5": "babel --out-dir=lib src",
+    "clean": "rm -rf lib coverage .nyc_output npm-debug.log",
+    "cover": "nyc --reporter text --reporter html eater",
+    "lint": "eslint src test",
+    "postversion": "git push && git push --tags && npm run clean",
+    "prepublish": "npm-run-all clean lint test build",
+    "preversion": "npm-run-all clean lint test",
+    "test": "eater",
+    "travis": "npm-run-all lint test"
+  }
 }
