@@ -11,7 +11,7 @@ test("empty", () => {
   "consts": [],
   "paramValues": [],
   "paramIndices": {},
-  "specs": [],
+  "units": [],
   "variants": {}
 }`
 .trim();
@@ -32,7 +32,7 @@ test("sine", () => {
     "amp" : { "index": 0, "length": 1 },
     "freq": { "index": 1, "length": 1 }
   },
-  "specs": [
+  "units": [
     [ "Control"     , 1, 0, [                                ], [ 1, 1 ] ],
     [ "SinOsc"      , 2, 0, [ [  0, 1 ], [ -1, 0 ]           ], [ 2    ] ],
     [ "BinaryOpUGen", 2, 2, [ [  1, 0 ], [  0, 0 ]           ], [ 2    ] ],
@@ -51,14 +51,14 @@ test("sine", () => {
   assert(actual === expected);
 });
 
-test("specs", () => {
+test("units", () => {
   const expected = `
 {
-  "name": "specs",
+  "name": "units",
   "consts": [],
   "paramValues": [],
   "paramIndices": {},
-  "specs": [
+  "units": [
     [ "A"  ,   1,   2, [ [ 0, 1 ]                                         ], [ 0 ] ],
     [ "BB" ,  10,  20, [ [ 0, 1 ], [ 2, 3 ], [ 4, 5 ], [ 6, 7 ], [ 8, 9 ] ], [ 1 ] ],
     [ "CCC", 100, 200, [ [ 0, 1 ], [ 2, 3 ]                               ], [   ] ]

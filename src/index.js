@@ -11,7 +11,7 @@ function format(synthdef) {
   "consts": ${ formatConsts(synthdef.consts) },
   "paramValues": ${ formatParamValues(synthdef.paramValues) },
   "paramIndices": ${ formatParamIndices(synthdef.paramIndices) },
-  "specs": ${ formatSpec(synthdef.specs) },
+  "units": ${ formatUnits(synthdef.units) },
   "variants": ${ formatVariants(synthdef.variants) }
 }`.trim();
 }
@@ -93,13 +93,13 @@ ${ zipped.map(([ key, values ]) => spc(4) + `${ key }: ${ values }`).join(",\n")
   }`;
 }
 
-function formatSpec(specs) {
-  if (specs.length === 0) {
+function formatUnits(units) {
+  if (units.length === 0) {
     return "[]";
   }
 
   const fmt = values => JSON.parse(JSON.stringify(unzip(values)).replace(/null/g, "[]"));
-  const unzipped = unzip(specs);
+  const unzipped = unzip(units);
   const zipped = zip(
     alignR(unzipped[0].map(toS)),
     alignL(unzipped[1].map(toS)),
