@@ -1,7 +1,7 @@
 {
   "name": "synthdef-json-formatter",
   "description": "synthdef json formatter",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Nao Yonamine <mohayonao@gmail.com>",
   "bugs": {
     "url": "https://github.com/mohayonao/synthdef-json-formatter/issues"
