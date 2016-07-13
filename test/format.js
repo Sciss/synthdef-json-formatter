@@ -1,7 +1,8 @@
 "use strict";
 
 const assert = require("assert");
-const test = require("eater/runner").test;
+const test = require("eatest");
+const toPairs = require("lodash.topairs");
 const formatter = require("../src");
 
 test("empty", () => {
@@ -20,6 +21,7 @@ test("empty", () => {
   const actual = formatter.format(synthdef);
 
   assert(actual === expected);
+  assert.deepEqual(JSON.parse(actual), synthdef);
 });
 
 test("sine", () => {
@@ -49,6 +51,7 @@ test("sine", () => {
   const actual = formatter.format(synthdef);
 
   assert(actual === expected);
+  assert.deepEqual(JSON.parse(actual), synthdef);
 });
 
 test("units", () => {
@@ -71,4 +74,37 @@ test("units", () => {
   const actual = formatter.format(synthdef);
 
   assert(actual === expected);
+  assert.deepEqual(JSON.parse(actual), synthdef);
+});
+
+test("infinity", () => {
+  const expected = `
+{
+  "name": "units",
+  "consts": [ "Infinity", "-Infinity" ],
+  "paramValues": [ "Infinity", "-Infinity" ],
+  "paramIndices": {
+    "a": { "index": 0, "length": 1 },
+    "b": { "index": 1, "length": 1 }
+  },
+  "units": [],
+  "variants": {
+    "alpha": [ "Infinity", "-Infinity" ],
+    "beta" : [ "Infinity", "-Infinity" ]
+  }
+}
+`.trim();
+
+  const synthdef = JSON.parse(expected);
+
+  synthdef.consts = synthdef.consts.map(x => +x);
+  synthdef.paramValues = synthdef.paramValues.map(x => +x);
+  toPairs(synthdef.variants).forEach((items) => {
+    items[1] = items[1].map(x => +x);
+  });
+
+  const actual = formatter.format(synthdef);
+
+  assert(actual === expected);
+  assert.deepEqual(JSON.parse(actual), synthdef);
 });

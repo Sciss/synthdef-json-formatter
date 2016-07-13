@@ -51,6 +51,9 @@ function toS(value) {
   if (typeof value === "undefined") {
     return "";
   }
+  if (value === Infinity || value === -Infinity) {
+    return '"' + value + '"';
+  }
   return JSON.stringify(value);
 }
 
