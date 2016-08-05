@@ -3,7 +3,7 @@
 [![NPM Version](http://img.shields.io/npm/v/synthdef-json-formatter.svg?style=flat-square)](https://www.npmjs.org/package/synthdef-json-formatter)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](http://mohayonao.mit-license.org/)
 
-decode [SuperCollider Synth Definition File Format](http://doc.sccode.org/Reference/Synth-Definition-File-Format.html) and convert to JSON.
+formatter for [SuperCollider Synth Definition File Format](http://doc.sccode.org/Reference/Synth-Definition-File-Format.html)
 
 ## Installation
 

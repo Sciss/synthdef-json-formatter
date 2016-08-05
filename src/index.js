@@ -4,16 +4,24 @@ const toPairs = require("lodash.topairs");
 const unzip = require("lodash.unzip");
 const zip = require("lodash.zip");
 
-function format(synthdef) {
-  return `
-{
-  "name": "${ synthdef.name }",
-  "consts": ${ formatConsts(synthdef.consts) },
-  "paramValues": ${ formatParamValues(synthdef.paramValues) },
-  "paramIndices": ${ formatParamIndices(synthdef.paramIndices) },
-  "units": ${ formatUnits(synthdef.units) },
-  "variants": ${ formatVariants(synthdef.variants) }
-}`.trim();
+function format(synthDef) {
+  if (Array.isArray(synthDef)) {
+    return `[
+${ synthDef.map(synthDef => _format(synthDef, 2)).join(",\n") }
+]`;
+  }
+  return _format(synthDef, 0);
+}
+
+function _format(synthDef, indent) {
+return `{
+_"name": "${ synthDef.name }",
+_"consts": ${ formatConsts(synthDef.consts) },
+_"paramValues": ${ formatParamValues(synthDef.paramValues) },
+_"paramIndices": ${ formatParamIndices(synthDef.paramIndices) },
+_"units": ${ formatUnits(synthDef.units) },
+_"variants": ${ formatVariants(synthDef.variants) }
+}`.trim().replace(/^_*/gm, _ => spc(indent + _.length * 2));
 }
 
 function spc(n) {
@@ -92,7 +100,7 @@ function formatParamIndices(paramIndices) {
   );
 
   return `{
-${ zipped.map(([ key, values ]) => spc(4) + `${ key }: ${ values }`).join(",\n") }
+${ zipped.map(([ key, values ]) => "__" + `${ key }: ${ values }`).join(",\n") }
   }`;
 }
 
@@ -112,7 +120,7 @@ function formatUnits(units) {
   );
 
   return `[
-${ zipped.map(values => spc(4) + toAS(values)).join(",\n") }
+${ zipped.map(values => "__" + toAS(values)).join(",\n") }
   ]`;
 }
 
@@ -130,7 +138,7 @@ function formatVariants(variants) {
   );
 
   return `{
-${ zipped.map(([ key, values ]) => spc(4) + `${ key }: ${ values }`).join(",\n") }
+${ zipped.map(([ key, values ]) => "__" + `${ key }: ${ values }`).join(",\n") }
   }`;
 }
 
