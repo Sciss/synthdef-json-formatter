@@ -14,14 +14,25 @@ ${ synthDef.map(synthDef => _format(synthDef, 2)).join(",\n") }
 }
 
 function _format(synthDef, indent) {
-return `{
-_"name": "${ synthDef.name }",
-_"consts": ${ formatConsts(synthDef.consts) },
-_"paramValues": ${ formatParamValues(synthDef.paramValues) },
-_"paramIndices": ${ formatParamIndices(synthDef.paramIndices) },
-_"units": ${ formatUnits(synthDef.units) },
-_"variants": ${ formatVariants(synthDef.variants) }
-}`.trim().replace(/^_*/gm, _ => spc(indent + _.length * 2));
+  const lines = [];
+
+  lines.push('{');
+  lines.push(`_"name": "${ synthDef.name }",`);
+  lines.push(`_"consts": ${ formatConsts(synthDef.consts) },`);
+  if (synthDef.paramValues != null ) {
+    lines.push(`_"paramValues": ${ formatParamValues(synthDef.paramValues) },`);
+    lines.push(`_"paramIndices": ${ formatParamIndices(synthDef.paramIndices) },`);
+  }
+
+  if (synthDef.variants != null) {
+    lines.push(`_"units": ${ formatUnits(synthDef.units) },`);
+    lines.push(`_"variants": ${ formatVariants(synthDef.variants) }`);
+  } else {
+    lines.push(`_"units": ${ formatUnits(synthDef.units) }`);
+  }
+  lines.push(`}`);
+
+  return lines.join("\n").replace(/^_*/gm, _ => spc(indent + _.length * 2));
 }
 
 function spc(n) {
@@ -84,6 +95,10 @@ function formatParamValues(paramValues) {
 }
 
 function formatParamIndices(paramIndices) {
+  if (Array.isArray(paramIndices)) {
+    return formatParamIndicesArray(paramIndices);
+  }
+
   const pairs = toPairs(paramIndices);
 
   if (pairs.length === 0) {
@@ -102,6 +117,28 @@ function formatParamIndices(paramIndices) {
   return `{
 ${ zipped.map(([ key, values ]) => "__" + `${ key }: ${ values }`).join(",\n") }
   }`;
+}
+
+function formatParamIndicesArray(paramIndices) {
+  if (paramIndices.length === 0) {
+    return "[]";
+  }
+
+  const unzipped = [ "name", "index", "length" ].map((key) => {
+    return paramIndices.map(paramIndex => paramIndex[key]);
+  });
+  const zipped = zip(
+    alignR(unzipped[0].map(toS)),
+    alignL(unzipped[1].map(toS)),
+    alignL(unzipped[2].map(toS))
+  );
+  const a2s = ([ name, index, length ]) => {
+    return `{ "name": ${ name }, "index": ${ index }, "length": ${ length } }`;
+  };
+
+  return `[
+${ zipped.map(values => "__" + a2s(values)).join(",\n") }
+  ]`;
 }
 
 function formatUnits(units) {
@@ -125,6 +162,10 @@ ${ zipped.map(values => "__" + toAS(values)).join(",\n") }
 }
 
 function formatVariants(variants) {
+  if (Array.isArray(variants)) {
+    return formatVariantsArray(variants);
+  }
+
   const pairs = toPairs(variants);
 
   if (pairs.length === 0) {
@@ -140,6 +181,28 @@ function formatVariants(variants) {
   return `{
 ${ zipped.map(([ key, values ]) => "__" + `${ key }: ${ values }`).join(",\n") }
   }`;
+}
+
+function formatVariantsArray(variants) {
+  if (variants.length === 0) {
+    return "[]";
+  }
+
+  const unzipped = [ "name", "values" ].map((key) => {
+    return variants.map(variant => variant[key]);
+  });
+  const zipped = zip(
+    alignR(unzipped[0].map(toS)),
+    alignN(unzipped[1])
+  );
+  const a2s = ([ name, values ]) => {
+    return `{ "name": ${ name }, "values": ${ values } }`;
+  };
+
+  return `[
+${ zipped.map(values => "__" + a2s(values)).join(",\n") }
+  ]`;
+
 }
 
 module.exports = { format };
