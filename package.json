@@ -7,9 +7,9 @@
     "url": "https://github.com/mohayonao/synthdef-json-formatter/issues"
   },
   "dependencies": {
-    "lodash.topairs": "^4.2.0",
-    "lodash.unzip": "^3.3.2",
-    "lodash.zip": "^4.1.0"
+    "lodash.topairs": "^4.3.0",
+    "lodash.unzip": "^3.4.0",
+    "lodash.zip": "^4.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
